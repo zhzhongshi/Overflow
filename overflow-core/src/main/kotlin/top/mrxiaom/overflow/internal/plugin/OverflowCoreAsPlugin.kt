@@ -15,7 +15,7 @@ import net.mamoe.mirai.console.plugin.loader.PluginLoader
 import net.mamoe.mirai.console.util.ConsoleExperimentalApi
 import net.mamoe.mirai.console.util.SemVersion
 import net.mamoe.mirai.utils.weeksToMillis
-import top.mrxiaom.overflow.internal.BuildConstants
+//import top.mrxiaom.overflow.internal.BuildConstants
 import top.mrxiaom.overflow.internal.Overflow
 import top.mrxiaom.overflow.internal.message.OnebotMessages
 import top.mrxiaom.overflow.internal.utils.LoggerInFolder
@@ -116,7 +116,8 @@ internal object OverflowCoreAsPlugin : Plugin, CommandOwner {
         override val id: String get() = "top.mrxiaom.overflow"
         override val name: String get() = "溢出核心"
         override val author: String get() = "MrXiaoM"
-        override val version: SemVersion get() = SemVersion(top.mrxiaom.overflow.internal.BuildConstants.VERSION)
+        const val versionString = "1.2.3-alpha+build123"
+        override val version: SemVersion = SemVersion(versionString) /*get() = SemVersion(top.mrxiaom.overflow.internal.BuildConstants.VERSION)*/
         override val info: String get() = ""
         override val dependencies: Set<PluginDependency> get() = setOf()
 

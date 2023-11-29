@@ -130,7 +130,7 @@ class Overflow : IMirai, CoroutineScope, LowLevelApiAccessor {
     @JvmBlockingBridge
     suspend fun start(printInfo: Boolean = false, logger: Logger = LoggerFactory.getLogger("Onebot")): Boolean {
         if (printInfo) {
-            logger.info("Overflow v${top.mrxiaom.overflow.internal.BuildConstants.VERSION} 正在运行")
+            logger.info("Overflow v NULL 正在运行")
             logger.info("连接到 WebSocket: ${config.wsHost}")
         }
 
