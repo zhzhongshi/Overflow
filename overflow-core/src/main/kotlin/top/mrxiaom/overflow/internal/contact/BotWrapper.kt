@@ -18,6 +18,7 @@ import net.mamoe.mirai.utils.*
 import org.java_websocket.framing.CloseFrame
 import top.mrxiaom.overflow.internal.Overflow
 import top.mrxiaom.overflow.contact.RemoteBot
+import top.mrxiaom.overflow.contact.Updatable
 import top.mrxiaom.overflow.internal.data.FriendInfoImpl
 import top.mrxiaom.overflow.internal.data.StrangerInfoImpl
 import top.mrxiaom.overflow.internal.utils.LoggerInFolder
@@ -33,7 +34,7 @@ class BotWrapper private constructor(
     implBot: Bot,
     defLoginInfo: LoginInfoResp,
     botConfiguration: BotConfiguration
-) : net.mamoe.mirai.Bot, RemoteBot, CoroutineScope {
+) : net.mamoe.mirai.Bot, RemoteBot, Updatable, CoroutineScope {
     private var implInternal = implBot
     val impl: Bot
         get() = implInternal
@@ -53,10 +54,20 @@ class BotWrapper private constructor(
             GroupWrapper(this, it)
         }) { impl = it.impl }
     }
+
+    override suspend fun queryUpdate() {
+        updateLoginInfo()
+        updateContacts()
+    }
     suspend fun updateOtherClients() = runCatching {
         otherClientsInternal.update(impl.getOnlineClients(false).data.clients.map {
             OtherClientWrapper(this, it)
         }) { impl = it.impl }
+    }
+    internal fun updateGroup(group: GroupWrapper): GroupWrapper {
+        return ((groups[group.id] as? GroupWrapper) ?: group.also { groupsInternal.delegate.add(it) }). apply {
+            impl = group.impl
+        }
     }
     internal fun updateFriend(friend: FriendWrapper): FriendWrapper {
         return ((friends[friend.id] as? FriendWrapper) ?: friend.also { friendsInternal.delegate.add(it) }).apply {
