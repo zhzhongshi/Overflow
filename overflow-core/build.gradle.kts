@@ -27,6 +27,8 @@ dependencies {
     compileOnly("net.mamoe:mirai-console")
     implementation("net.mamoe:mirai-core-api")
     implementation("net.mamoe:mirai-core-utils")
+    implementation("org.java-websocket:Java-WebSocket:1.5.4")
+    implementation("me.him188:kotlin-jvm-blocking-bridge-runtime:3.0.0-180.1")
 
     fun netty(s: String): Dependency? = implementation("io.netty:netty-$s:4.1.90.Final")
     netty("codec-http")
@@ -34,7 +36,7 @@ dependencies {
     netty("transport")
 
     api(project(":onebot"))
-    implementation("me.him188:kotlin-jvm-blocking-bridge-runtime:3.0.0-180.1")
+    api(project(":overflow-core-api"))
 
     testImplementation("com.google.code.gson:gson:2.10.1")
     testImplementation("org.java-websocket:Java-WebSocket:1.5.4")
